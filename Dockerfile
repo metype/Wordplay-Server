@@ -4,4 +4,4 @@ WORKDIR /app
 
 COPY . .
 
-CMD [ "node", "server/index.mjs" ]
+CMD [ "node", "." ]
