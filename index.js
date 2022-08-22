@@ -9,7 +9,6 @@ const app = express();
 app.use(cors());
 
 let words = new Set(readFileSync('words-alpha.txt').toString().split('\n'));
-console.log(words);
 
 let games = [];
 
@@ -244,7 +243,7 @@ function handleSubmit(req, res) {
         });
         return;
     }
-    if (words.has(`${word.toLowerCase()}\n`) && !game.usedWords.includes(word.toLowerCase())) {
+    if (words.has(word.toLowerCase()) && !game.usedWords.includes(word.toLowerCase())) {
         ret = submitWord(word, game, player);
         res.status(200);
     } else {
