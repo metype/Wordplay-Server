@@ -243,7 +243,7 @@ function handleSubmit(req, res) {
         });
         return;
     }
-    if (words.has(`${word.toLowerCase()}\r`) && !game.usedWords.includes(word.toLowerCase())) {
+    if (words.has(`${word.toLowerCase()}\n`) && !game.usedWords.includes(word.toLowerCase())) {
         ret = submitWord(word, game, player);
         res.status(200);
     } else {
