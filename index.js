@@ -9,6 +9,7 @@ const app = express();
 app.use(cors());
 
 let words = new Set(readFileSync('words-alpha.txt').toString().split('\n'));
+console.log(words);
 
 let games = [];
 
