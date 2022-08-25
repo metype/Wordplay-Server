@@ -41,7 +41,11 @@ function submitWord(word, game, player) {
     }
     if (num1 / 26.0 > .4) game.winner = game.players[0].id;
     if (num2 / 26.0 > .4) game.winner = game.players[1].id;
-    if(game.turn == 0 && game.players[1].bot) game.players[1].makeSubmition();
+    if(game.turn == 1 && game.players[1].bot) {
+        setTimeout(() => {
+            game.players[1].makeSubmition();
+        }, 5000 + (Math.random()*6000 - 3000));
+    }
     return ret;
 }
 

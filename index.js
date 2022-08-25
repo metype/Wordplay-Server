@@ -32,13 +32,14 @@ app.listen(4000 , ()=>{
 setInterval(() => {
     for (let i in GameManager.games) {
         let game = GameManager.games[i];
+        if(game.players == undefined) console.log(game);
         if (game.players.length == 1) {
             if (Date.now() - game.players[0].lastPing > 85000) {
                 GameManager.remove(game.id);
                 console.log(`Game with id : ${game.id} has been pruned due to inactivity`);
             } else if (Date.now() - game.players[0].lastSeen > 15000) {
                 let robot = new RoboticPlayer(game);
-                JoinHandler.joinGame(robot.id);
+                JoinHandler.joinGame(robot.id, game.id, robot);
             }
         } else {
             if (Date.now() - game.players[0].lastPing > 85000 && Date.now() - game.players[1].lastPing > 85000) {

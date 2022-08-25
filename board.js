@@ -37,6 +37,9 @@ function handleBoard(req, res) {
     } else {
         return;
     }
+    if(game.players.length == 1) {
+        ret.turn = -1;
+    }
     if (((Date.now() - game.players[0].lastSeen > 75000 && game.turn == 0) || Date.now() - game.players[0].lastPing > 15000)) {
         if (game.players[0].id == player.id) {
             res.status(201);
@@ -69,7 +72,7 @@ function handleBoard(req, res) {
 }
 
 function calculateBoardScore(player_id, game) {
-    boardState = [];
+    let boardState = [];
     if (game.boardState[0].id === player_id) {
         boardState = game.boardState[0].boardState;
     } else if (game.boardState[1].id === player_id) {

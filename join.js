@@ -9,7 +9,7 @@ function handleJoin(req, res) {
         });
         return;
     }
-    ret = joinGame(req.query.id, null);
+    let ret = joinGame(req.query.id, null);
     res.status(ret.statusCode)
     res.json(ret.responseData);
 }
@@ -20,7 +20,7 @@ function joinGame(id, requestedGameID = null, forcedPlayerStructure = null) {
         responseData: {}
     }
     let player = {};
-    if(forcedPlayerStructure = null)
+    if(forcedPlayerStructure == null)
         player = {
             id: id,
             lastPing: Date.now(),
@@ -59,6 +59,7 @@ function joinGame(id, requestedGameID = null, forcedPlayerStructure = null) {
     returnedStructure.responseData = {
         id: game.id,
     };
+    return returnedStructure;
 }
 
 export default {
