@@ -29,7 +29,9 @@ function newBoardState(word, game, player) {
 
 function submitWord(word, game, player) {
     game.usedWords.push(word.toLowerCase());
-    let ret = "Other Player's Turn!"
+    let ret = {
+        game_status: "Other Player's Turn!",
+    };
     game = newBoardState(word, game, player);
     game.turn++;
     game.turn %= 2;

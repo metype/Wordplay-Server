@@ -43,21 +43,21 @@ function handleBoard(req, res) {
     if (((Date.now() - game.players[0].lastSeen > 75000 && game.turn == 0) || Date.now() - game.players[0].lastPing > 15000)) {
         if (game.players[0].id == player.id) {
             res.status(201);
-            ret.gameStatus = "AFK Forefit!";
+            ret.game_status = "AFK Forefit!";
         }   
         if (game.players[1]?.id == player.id) {
             res.status(201);
-            ret.gameStatus = "Competition Forefit!";
+            ret.game_status = "Competition Forefit!";
         }   
     }
     if (((Date.now() - game.players[1]?.lastSeen > 75000 && game.turn == 1) || Date.now() - game.players[1]?.lastPing > 15000)) {
         if (game.players[1]?.id == player.id) {
             res.status(201);
-            ret.gameStatus = "AFK Forefit!";
+            ret.game_status = "AFK Forefit!";
         }   
         if (game.players[0].id == player.id) {
             res.status(201);
-            ret.gameStatus = "Competition Forefit!";
+            ret.game_status = "Competition Forefit!";
         }   
     }
     if (game.winner == player.id) {
