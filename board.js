@@ -1,6 +1,6 @@
 import GameManager from './games.js';
 
-export default function handleBoard(req, res) {
+function handleBoard(req, res) {
     if (req.query.id == undefined || req.query.game_id == undefined) {
         return;
     }
@@ -66,4 +66,33 @@ export default function handleBoard(req, res) {
     }
     GameManager.set(game.id, game);
     res.json(ret);
+}
+
+function calculateBoardScore(player_id, game) {
+    boardState = [];
+    if (game.boardState[0].id === player_id) {
+        boardState = game.boardState[0].boardState;
+    } else if (game.boardState[1].id === player_id) {
+        boardState = game.boardState[1].boardState;
+    } else {
+        return 0;
+    }
+
+    let score = 0;
+
+    for(let i = 0; i < boardState.length; i++){
+        if(boardState[i] == 1) {
+            score++;
+        }
+        if(boardState[i] == 2) {
+            score--;
+        }
+    }
+
+    return score;
+}
+
+export default {
+    handleBoard,
+    calculateBoardScore
 }

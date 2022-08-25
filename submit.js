@@ -41,7 +41,7 @@ function submitWord(word, game, player) {
     }
     if (num1 / 26.0 > .4) game.winner = game.players[0].id;
     if (num2 / 26.0 > .4) game.winner = game.players[1].id;
-
+    if(game.turn == 0 && game.players[1].bot) game.players[1].makeSubmition();
     return ret;
 }
 
@@ -82,7 +82,7 @@ function handleSubmit(req, res) {
         });
         return;
     }
-    if (words.has(word.toLowerCase()) && !game.usedWords.includes(word.toLowerCase())) {
+    if ((words.has(word.toLowerCase()) || words.has(word.toLowerCase()+"\r")) && !game.usedWords.includes(word.toLowerCase())) {
         ret = submitWord(word, game, player);
         res.status(200);
     } else {

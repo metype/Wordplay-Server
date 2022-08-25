@@ -1,29 +1,46 @@
 import { randomBytes } from 'node:crypto';
 import GameManager from './games.js';
 
-export default function handleJoin(req, res) {
+function handleJoin(req, res) {
     if (req.query.id == undefined) {
+        res.status(400);
+        res.json({
+            game_status: "Malformed Request",
+        });
         return;
     }
-    let player = {
-        id: req.query.id,
-        lastPing: Date.now(),
-        lastSeen: Date.now(),
-    };
+    ret = joinGame(req.query.id, null);
+    res.status(ret.statusCode)
+    res.json(ret.responseData);
+}
+
+function joinGame(id, requestedGameID = null, forcedPlayerStructure = null) {
+    let returnedStructure = {
+        statusCode: 200,
+        responseData: {}
+    }
+    let player = {};
+    if(forcedPlayerStructure = null)
+        player = {
+            id: id,
+            lastPing: Date.now(),
+            lastSeen: Date.now(),
+        };
+    else
+        player = forcedPlayerStructure;
     for (let i in GameManager.games) {
         let game = GameManager.games[i];
-        if (game.players.length < 2) {
+        if (game.players.length < 2 || (requestedGameID == game.id)) {
             game.players.push(player);
             game.boardState.push({
                 id: player.id,
                 boardState: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             })
-            let ret = {
+            returnedStructure.responseData = {
                 id: game.id,
             };
             GameManager.set(game.id, game);
-            res.json(ret);
-            return;
+            return returnedStructure;
         }
     }
     let game = {
@@ -39,8 +56,12 @@ export default function handleJoin(req, res) {
         usedWords: [],
     };
     GameManager.add(game);
-    let ret = {
+    returnedStructure.responseData = {
         id: game.id,
     };
-    res.json(ret);
+}
+
+export default {
+    handleJoin,
+    joinGame
 }
