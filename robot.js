@@ -27,6 +27,6 @@ export default class RoboticPlayer {
             let score = BoardHandler.calculateBoardScore(this.id, SubmitHandler.newBoardState(word, game, this));
             if(score > leadingScore) leadingWord = word;
         }
-        GameManager.set(this.gameid, SubmitHandler.submitWord(word, GameManager.get(this.gameId), this));
+        GameManager.set(this.gameid, SubmitHandler.submitWord(leadingWord, GameManager.get(this.gameId), this));
     }
 }
