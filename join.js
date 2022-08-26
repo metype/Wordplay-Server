@@ -30,7 +30,7 @@ function joinGame(id, requestedGameID = null, forcedPlayerStructure = null) {
         player = forcedPlayerStructure;
     for (let i in GameManager.games) {
         let game = GameManager.games[i];
-        if (game.players.length < 2 || (requestedGameID == game.id)) {
+        if ((game.players.length < 2 && requestedGameID == null) || (requestedGameID == game.id)) {
             game.players.push(player);
             game.boardState.push({
                 id: player.id,
@@ -54,6 +54,7 @@ function joinGame(id, requestedGameID = null, forcedPlayerStructure = null) {
         ],
         turn: 0,
         usedWords: [],
+        age: Date.now(),
     };
     GameManager.add(game);
     returnedStructure.responseData = {
